@@ -92,6 +92,10 @@ app.put("/post-image", (req, res, next) => {
     });
 });
 
+app.get('/', (req, res) => {
+  res.send('Server is running 🚀');
+});
+
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -118,11 +122,13 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
+const PORT = process.env.PORT || 8000;
+
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-lecture.81bw39m.mongodb.net/${process.env.MONGO_DEFAULT_DB}?retryWrites=true&w=majority`,
   )
-  .then((result) => {
-    app.listen(8000);
+  .then(() => {
+    app.listen(PORT);
   })
   .catch((err) => console.log(err));
