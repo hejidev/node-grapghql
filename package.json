@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-with-graphql",
+  "version": "1.0.0",
+  "description": "my nodejs using graphql instead of rest api",
+  "license": "ISC",
+  "author": "hejidev",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "compression": "^1.8.1",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-graphql": "^0.12.0",
+    "express-validator": "^7.3.1",
+    "graphql": "^15.10.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.1",
+    "multer": "^2.1.1",
+    "nodemon": "^3.1.14",
+    "uuid": "^13.0.0",
+    "validator": "^13.15.26"
+  }
+}
