@@ -20,10 +20,8 @@ exports.signup = async (req, res, next) => {
 
     const { email, name, password } = req.body;
 
-    // HASH PASSWORD
     const passwordHash = await bcrypt.hash(password, 12);
 
-    // CREATE USER
     const user = new User({
       email,
       name,
@@ -48,7 +46,6 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // FIND USER
     const user = await User.findOne({ email: email });
 
     if (!user) {
@@ -57,7 +54,6 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
-    // CHECK PASSWORD
     const isEqual = await bcrypt.compare(password, user.password);
 
     if (!isEqual) {
@@ -72,7 +68,7 @@ exports.login = async (req, res, next) => {
         email: user.email,
         userId: user._id.toString(),
       },
-      "somesupersecretsecret",
+       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 

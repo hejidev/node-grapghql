@@ -76,7 +76,7 @@ module.exports = {
         userId: user._id.toString(),
         email: user.email,
       },
-      "somesupersecretsecret",
+       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
     return { token: token, userId: user._id.toString() };
@@ -195,12 +195,10 @@ module.exports = {
       throw new Error("No post found!");
     }
 
-    // ✅ FIXED AUTH CHECK
     if (post.creator._id.toString() !== req.userId.toString()) {
       throw new Error("Not authorized!");
     }
 
-    // VALIDATION
     if (
       validator.isEmpty(postInput.title) ||
       !validator.isLength(postInput.title, { min: 5 })
@@ -215,7 +213,6 @@ module.exports = {
       throw new Error("Invalid content");
     }
 
-    // ✅ HANDLE IMAGE UPDATE
     if (postInput.imageUrl) {
       if (post.imageUrl !== postInput.imageUrl) {
         clearImage(post.imageUrl);

@@ -124,16 +124,16 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
-});
-
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@node-lecture.81bw39m.mongodb.net/${process.env.MONGO_DEFAULT_DB}?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("MongoDB connected");
+
+    app.listen(PORT, () => {
+      console.log("Server running on port " + PORT);
+    });
   })
   .catch((err) => {
     console.log("MongoDB error:", err);
