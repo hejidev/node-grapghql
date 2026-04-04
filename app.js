@@ -63,9 +63,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-);
+// app.use(
+//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+// );
 
 app.use(auth);
 
@@ -73,24 +73,25 @@ app.use(helmet());
 app.use(compression());
 // app.use(morgan("combined"));
 
-app.put("/post-image", (req, res, next) => {
-  if (!req.isAuth) {
-    throw new Error("Not authenticated!");
-  }
-  if (!req.file) {
-    return res.status(200).json({ message: "No file provided!" });
-  }
-  if (req.body.oldPath) {
-    clearImage(req.body.oldPath);
-  }
-  console.log("Uploaded file:", req.file);
-  return res
-    .status(201)
-    .json({
+app.put(
+  "/post-image",
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+  (req, res, next) => {
+    if (!req.isAuth) {
+      throw new Error("Not authenticated!");
+    }
+    if (!req.file) {
+      return res.status(200).json({ message: "No file provided!" });
+    }
+    if (req.body.oldPath) {
+      clearImage(req.body.oldPath);
+    }
+    return res.status(201).json({
       message: "File stored.",
       filePath: "images/" + req.file.filename,
     });
-});
+  }
+);
 
 app.get('/', (req, res) => {
   res.send('Server is running 🚀');
